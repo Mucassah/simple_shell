@@ -2,8 +2,8 @@
 
 /**
  * _myhistory - displays the history list, one command by line, preceded
- *              with line numbers, starting at 0.
- * @info: Structure containing potential arguments. Used to maintain
+ *              with line numbers, starts at 0.
+ * @info: Structure that contains potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
@@ -14,7 +14,7 @@ int _myhistory(info_t *info)
 }
 
 /**
- * unset_alias - sets alias to string
+ * unset_alias - unsets alias to string
  * @info: parameter struct
  * @str: the string alias
  *
@@ -22,17 +22,17 @@ int _myhistory(info_t *info)
  */
 int unset_alias(info_t *info, char *str)
 {
-	char *p, c;
+	char *paste, copy;
 	int ret;
 
-	p = _strchr(str, '=');
-	if (!p)
+	paste = _strchr(str, '=');
+	if (!paste)
 		return (1);
-	c = *p;
-	*p = 0;
+	copy = *paste;
+	*paste = 0;
 	ret = delete_node_at_index(&(info->alias),
 		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
-	*p = c;
+	*paste = copy;
 	return (ret);
 }
 

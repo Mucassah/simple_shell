@@ -9,12 +9,12 @@
  */
 int _myexit(info_t *info)
 {
-	int exitcheck;
+	int checkexit;
 
 	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exitcheck = _erratoi(info->argv[1]);
-		if (exitcheck == -1)
+		checkexit = _erratoi(info->argv[1]);
+		if (checkexit == -1)
 		{
 			info->status = 2;
 			print_error(info, "Illegal number: ");
@@ -37,32 +37,32 @@ int _myexit(info_t *info)
  */
 int _mycd(info_t *info)
 {
-	char *s, *dir, buffer[1024];
+	char *str, *direct, buffer[1024];
 	int chdir_ret;
 
-	s = getcwd(buffer, 1024);
-	if (!s)
+	str = getcwd(buffer, 1024);
+	if (!str)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		dir = _getenv(info, "HOME=");
-		if (!dir)
+		direct = _getenv(info, "HOME=");
+		if (!direct)
 			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+				chdir((direct = _getenv(info, "PWD=")) ? direct : "/");
 		else
-			chdir_ret = chdir(dir);
+			chdir_ret = chdir(direct);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
 		if (!_getenv(info, "OLDPWD="))
 		{
-			_puts(s);
+			_puts(str);
 			_putchar('\n');
 			return (1);
 		}
 		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+			chdir((direct = _getenv(info, "OLDPWD=")) ? direct : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
